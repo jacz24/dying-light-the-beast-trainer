@@ -4,9 +4,9 @@ Last updated: 2026-11-08 (session 9). Start with "End of session 9"; the resume 
 
 ## End of session 9 (2026-11-04 evening; the user's last message 2026-11-08): where to resume
 
-- **Done, in the app:** NoClip (F3; the user: works) and flying (F2; the user: "It's all working!", but see open item 1). The teleports and the flight are in `movement.py` (a mixin). The F8 fall-through: the cause is found (see session 9); no fix, by the user's choice: NoClip and flying are the way out. The app now ends when the game ends.
+- **Done, in the app:** NoClip (F3) and flying (F2), both confirmed by the user ("working great"; the game close right after "flying on" was the user, not a crash). The teleports and the flight are in `movement.py` (a mixin). The F8 fall-through: the cause is found (see session 9); no fix, by the user's choice: NoClip and flying are the way out. The app now ends when the game ends.
 - **Open, in this order:**
-  1. **Flying and a game crash?** The log shows "flying on", then within about 10 s the game freed its memory (the scans read 9.4, 6.0, 1.7, 0 GB): a crash or a close. Ask the user. If a crash: fly again with a recorder of the position and both speeds.
+  1. **Test `BeastTrainer.exe` with the game** (the panel, the overlay, one cheat, F1), then push the exe commit and a `v1.0.0` tag (the workflow makes the first release). Both pushes need the user's OK.
   2. The ice cream truck markers (`lootstate.no_item()`): asked at the end of session 9; write the answer here.
   3. Loot after a long jump: no clean run yet (the user moved or jumped again each time).
   4. **Release on GitHub** (the user's wish: public, with the source, as a resume project and an open alternative to closed trainers). Done locally (session 9, 2026-11-08): a git repository on `main`; `README.md` (single-player only, the co-op note, unofficial, takedown on request), MIT `LICENSE`, `requirements.txt`, `.gitignore` (run data, `*.exe`); the cheat table and the dead-end data deleted; the research scripts in `research/`. The user's name for it: "Dying Light: The Beast Trainer" (repo name proposed: `dying-light-the-beast-trainer`, account `jacz24`). Public since 2026-11-08: https://github.com/jacz24/dying-light-the-beast-trainer (the user's choices: NOTES.md public as is; commits with the GitHub noreply address, set for this repo only; no Claude-Session lines in this repo). **The exe:** `BeastTrainer.exe` (PyInstaller 6.22.3, one file, 27 MB, asks for admin rights, `--collect-all raylib`); it loads and stops cleanly without the game; not tested with the game yet. `.github/workflows/release.yml` builds it on a `v*` tag and attaches it with its SHA-256 (not run yet). Settings sit next to the exe (`overlay.HERE`).
@@ -30,7 +30,7 @@ Last updated: 2026-11-08 (session 9). Start with "End of session 9"; the resume 
   - The player's gravity is about 18.4 m/s² (the up speed drops 0.185 m/s a frame at about 100 frames a second). The layout looks like a Bullet kinematic character controller.
   - Pitfall: the btRigidBody sat 0x400 bytes before a page that cannot be read; `velfind.py` reads up to `region_size()`.
 - **NoClip (F3), the user: works.** Each frame: the held position moved by the keys along the view (`fly_step()`, with asserts), written to `+0xfd0`, both speeds 0. Dry run: 10.3 m/s along the view, 10 m/s up with Space, the same level direction as the walk. F8 and F10 move the held position too (`go()`).
-- **Flying (F2).** Each frame only the speeds: level = (view direction x keys x speed), up the same; the physics moves the player, so walls should stop it (not confirmed). On the ground the game zeroes the up speed: Space (the game's jump) takes off. Dry run: all speeds right (10 m/s, 14.1 with a side key, 40 with Shift). Real run: see open item 1.
+- **Flying (F2).** Each frame only the speeds: level = (view direction x keys x speed), up the same; the physics moves the player, so walls should stop it (not confirmed). On the ground the game zeroes the up speed: Space (the game's jump) takes off. Dry run: all speeds right (10 m/s, 14.1 with a side key, 40 with Shift). Real run: the user: works.
 - The user's choices: F2 flying, F3 NoClip; W/S along the view, A/D level sideways, Space up, Ctrl down; 10 m/s, Shift x4. `python overlay.py --dry-fly`: both modes only print.
 - **Self-check "noclip"** (11 checks now): the up speed's x and z neighbours are 0, and the level speed equals the rigid body's while the player walks (it waits for a walk, so two zeros cannot pass it).
 - **App fix:** after the game closed, the app ran 16,151 empty full scans in 2.7 minutes. `mem.Process.running()` (`GetExitCodeProcess`); `tick()` ends the app when the game has ended. Tested on a short-lived process, not on the game.
@@ -439,6 +439,5 @@ The user's wish list for session 3 (2026-11-03): **teleport, aimbot, instant loo
 > Rules: education only, offline. File edits are allowed. Game memory writes are allowed, but each new kind of write gets a read-only dry run first. The game runs as administrator, so this terminal must be elevated. The quit key of every script is F1. Start a script, wait for its ready line, and only then tell me to act. Explain each step.
 >
 > Goal of this session, in this order:
-> 1. Flying (F2): did the game crash right after "flying on" in session 9? Test flying again with a recorder: rise, hover, a wall, Shift.
-> 2. The release on GitHub: the decisions and the clean-up listed under "End of session 9", then a local git repository. Do not push without my OK.
-> 3. Hardening across game versions (field offsets inside objects).
+> 1. Test BeastTrainer.exe (in dist\) with the game. Then push the exe commit and a v1.0.0 tag for the first release, but only after my OK.
+> 2. Hardening across game versions (field offsets inside objects).
