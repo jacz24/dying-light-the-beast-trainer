@@ -9,7 +9,7 @@ Last updated: 2026-11-08 (session 9). Start with "End of session 9"; the resume 
   1. **Flying and a game crash?** The log shows "flying on", then within about 10 s the game freed its memory (the scans read 9.4, 6.0, 1.7, 0 GB): a crash or a close. Ask the user. If a crash: fly again with a recorder of the position and both speeds.
   2. The ice cream truck markers (`lootstate.no_item()`): asked at the end of session 9; write the answer here.
   3. Loot after a long jump: no clean run yet (the user moved or jumped again each time).
-  4. **Release on GitHub** (the user's wish: public, with the source, as a resume project and an open alternative to closed trainers). Nothing published yet. Decisions and clean-up first (see the end of session 9 in the conversation: a name without "aimbot", the third-party cheat table and the crack folder out of the files and notes, a guard or a clear rule for co-op, a README, a licence, a `.gitignore` for the run data).
+  4. **Release on GitHub** (the user's wish: public, with the source, as a resume project and an open alternative to closed trainers). Done locally (session 9, 2026-11-08): a git repository on `main`; `README.md` (single-player only, the co-op note, unofficial, takedown on request), MIT `LICENSE`, `requirements.txt`, `.gitignore` (run data, `*.exe`); the cheat table and the dead-end data deleted; the research scripts in `research/`. The user's name for it: "Dying Light: The Beast Trainer" (repo name proposed: `dying-light-the-beast-trainer`, account `jacz24`). **Not pushed.** Open before the push: NOTES.md public or not, the commit email (public on GitHub), a release binary (PyInstaller, not installed yet).
   5. Hardening across game versions: field offsets inside objects are still constants (the self-checks catch a move, but do not find the new place). Candidates: code signatures per field (as for `playervars.GETTER`), or an automatic re-learn by behaviour.
   6. Optional: the light delay; aim at the head centre.
 
@@ -261,7 +261,7 @@ The user chose step 8 (loot ESP) first, then step 1 (restart test) and the rest 
 ## Environment
 
 - Process name: `DyingLightGame_TheBeast_x64_rwdi.exe` (there is no `Dyi.exe` process). Folder: `C:\Games\Dying Light - The Beast\ph_ft\work\bin\x64`.
-- Python 3.14.3, numpy 2.5.2, `raylib==5.5.0.4` (pinned, session 4), Windows 11. Work folder: `C:\dev\Github\Aimbot`. Not a git repository.
+- Python 3.14.3, numpy 2.5.2, `raylib==5.5.0.4` (pinned, session 4), Windows 11. Work folder: `C:\dev\Github\Aimbot`, a git repository since session 9 (branch `main`). Game version 1.6.0.0 (session 9).
 - Session 4: the game window is on the second monitor (60 Hz) with a 1920×1080 client area at (669, −1269). The main monitor runs at 120 Hz. The NVIDIA driver caps OpenGL presents at 100 a second (see the session 4 section).
 - Game modules with class names (RTTI): `gamedll_ph_x64_rwdi.dll` (game logic, 66 MB), `engine_x64_rwdi.dll` (43 MB), `engine_core_x64_rwdi.dll`.
 - Coordinates: Y is up. A position is 3 floats in a row: x, height, z. The unit is meters (a walk is about 1.4 to 3 per second).
