@@ -80,7 +80,8 @@ SWITCHES = {"overlay": True, "boxes": True, "bars": True, "heads": True,
             "ammo": False, "stamina": False, "durability": False, "reload": False, "smart": False, "immortal": False,
             "fall": False, "onehit": False, "fury": False}
 HOLD = {"day": 0.5, "night": 0.0}  # always day / always night: the game clock held at 12:00 or 00:00
-SETTINGS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "overlay_settings.json")
+HERE = os.path.dirname(sys.executable if getattr(sys, "frozen", False) else os.path.abspath(__file__))  # the exe's folder
+SETTINGS = os.path.join(HERE, "overlay_settings.json")  # (a one-file exe runs from a temporary folder)
 NOT_SAVED = ("armed",)  # the nuke starts disarmed after each start, so a stray F7 cannot fire it
 BG, FG, BUTTON = "#1e1e1e", "#e0e0e0", "#3a3a3a"
 VK_F6, VK_F7, VK_F11, VK_LBUTTON = 0x75, 0x76, 0x7a, 0x01
@@ -476,4 +477,12 @@ class App(Cheats, Movement, SelfCheck):
 
 
 if __name__ == "__main__":
-    App(mem.Process(EXE), "--tk" in sys.argv)
+    try:
+        App(mem.Process(EXE), "--tk" in sys.argv)
+    except (RuntimeError, OSError) as e:  # the game is not running, no admin rights, or a class not found after an update
+        print(f"Stopped: {e}")
+        if getattr(sys, "frozen", False):  # a double-clicked exe: keep the window open
+            try:
+                input("Press Enter to close.")
+            except EOFError:  # no console input (Windows calls NUL a terminal, so isatty() cannot tell)
+                pass

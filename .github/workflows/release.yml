@@ -1,0 +1,26 @@
+# A version tag (v1.0.0, ...) builds BeastTrainer.exe from that commit and attaches it, with its SHA-256, to a release.
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  exe:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+      - run: pip install -r requirements.txt pyinstaller==6.22.3
+      - run: pyinstaller --noconfirm --onefile --uac-admin --name BeastTrainer --collect-all raylib overlay.py
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $hash = (Get-FileHash dist\BeastTrainer.exe -Algorithm SHA256).Hash.ToLower()
+          "$hash  BeastTrainer.exe" | Out-File -Encoding ascii dist\BeastTrainer.exe.sha256
+          gh release create "$env:GITHUB_REF_NAME" dist\BeastTrainer.exe dist\BeastTrainer.exe.sha256 `
+            --title "$env:GITHUB_REF_NAME" `
+            --notes "Built by GitHub Actions from commit $env:GITHUB_SHA. SHA-256: $hash. Single-player only. Windows asks for admin rights at start (the game runs as administrator)."

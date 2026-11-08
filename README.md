@@ -28,15 +28,23 @@ Hold F1 for half a second to quit. The app then sets each player variable back t
 ## Requirements
 
 - Windows 10 or 11, and the game in **windowed** mode (the overlay sits on the game's window).
-- Python 3.14 (tested with 3.14.3), then `pip install -r requirements.txt`.
+- For the source only: Python 3.14 (tested with 3.14.3), then `pip install -r requirements.txt`.
 - An **elevated** (administrator) terminal: the game runs as administrator, so a normal process cannot read its memory.
 - Tested on game version 1.6.0.0. After a game update, a feature whose fields moved stays off (see "Safety").
+
+## Download
+
+`BeastTrainer.exe` is on the Releases page. GitHub Actions builds it from the tagged source (`.github/workflows/release.yml`)
+and puts its SHA-256 next to it; check it with `Get-FileHash BeastTrainer.exe`. Windows asks for admin rights when it
+starts. The exe is not signed, and antivirus software may flag it, because it reads and writes another program's memory.
+If you do not trust a binary, run the source (below): it is the same code.
 
 ## Run
 
 1. Start the game and load a save.
-2. In an elevated terminal, in this folder: `python overlay.py`
-3. The control panel opens at once. The overlay starts after the first memory scan (about 15 s).
+2. Start `BeastTrainer.exe`, or, in an elevated terminal in this folder: `python overlay.py`
+3. The control panel opens at once. The overlay starts after the first memory scan (about 15 s). The settings are saved
+   in `overlay_settings.json` next to the exe or the script.
 
 Options: `--dry-fly` (NoClip and flying only print what they would write), `--tk` (the older tkinter overlay).
 
