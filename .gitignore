@@ -1,0 +1,10 @@
+__pycache__/
+# run data: recordings, scan results, local settings
+*.npz
+*.pkl
+instances.json
+overlay_settings.json
+# not part of the project
+*.exe
+build/
+dist/
