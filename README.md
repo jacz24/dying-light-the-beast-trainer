@@ -5,7 +5,7 @@ assist, teleports, NoClip and flying, and the usual player cheats. All of it is 
 
 Unofficial. Not affiliated with or endorsed by Techland. "Dying Light" is a trademark of its owner.
 
-> **Single-player only.** The game has co-op for up to 4 friends. This trainer is not made or supported for co-op
+> **Single-player only.** The game has online co-op for up to 4 players (you and 3 friends). This trainer is not made or supported for co-op
 > sessions, and we do not endorse its use there.
 
 ## What it does
